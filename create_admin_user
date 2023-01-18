@@ -1,0 +1,4 @@
+  From Windows command prompt with SYSTEM of Administrative privilages
+1. Execute the following commands (where {username} {password} are replaced with the desired username and password you want to create):
+  - net user /add {username} {password}
+  - net localgroup administrators {username} /add
